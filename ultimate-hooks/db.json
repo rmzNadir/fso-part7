@@ -15,6 +15,10 @@
     {
       "content": "New note 2",
       "id": 4
+    },
+    {
+      "content": "new note 3",
+      "id": 5
     }
   ],
   "persons": [
@@ -32,6 +36,11 @@
       "name": "abc",
       "number": "1234",
       "id": 3
+    },
+    {
+      "name": "XD",
+      "number": " 12",
+      "id": 4
     }
   ]
 }
