@@ -60,3 +60,13 @@
 .nav-bar > * {
   padding: 0 1rem 0 0;
 }
+
+.users-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 280px;
+}
+.users-info-header > * {
+  padding: 0 1rem;
+}
