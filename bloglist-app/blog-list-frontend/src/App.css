@@ -56,3 +56,7 @@
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.nav-bar > * {
+  padding: 0 1rem 0 0;
+}
