@@ -12,6 +12,7 @@ import LoginForm from './components/LoginForm';
 import Notification from './components/Notification';
 import Blog from './components/Blog';
 import Users from './components/Users';
+import User from './components/User';
 
 // Styles
 
@@ -75,6 +76,9 @@ const App = () => {
         </Route>
         <Route path='/blogs'>
           <Redirect to='/' />
+        </Route>
+        <Route path='/users/:id'>
+          <User />
         </Route>
         <Route path='/users'>
           <Users />
