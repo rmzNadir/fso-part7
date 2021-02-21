@@ -1,10 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Blog from './Blog';
 
-const Blogs = () => {
-  const blogs = useSelector(({ blogs }) => blogs);
-
+const Blogs = ({ blogs }) => {
   return (
     <div>
       {blogs.map((blog) => (

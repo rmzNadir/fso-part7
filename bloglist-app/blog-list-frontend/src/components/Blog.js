@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { likeBlog, removeBlog } from '../reducers/blogsReducer';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,16 +21,17 @@ const infoStyle = {
   alignItems: 'center',
 };
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, defSeeMore }) => {
+  console.log(blog);
   const dispatch = useDispatch();
   const loggedUser = useSelector(({ user }) => user.id);
 
   // State only used by a single component that doesn't matter globally
   // and state for non critical UI elements can be local
 
-  const [seeMore, setSeeMore] = useState(false);
+  const [seeMore, setSeeMore] = useState(defSeeMore || false);
 
-  const { title, author, url, likes, user } = blog;
+  const { title, author, url, likes, user, id } = blog;
 
   // Service implementation for handling removal of blogs
 
@@ -47,7 +49,9 @@ const Blog = ({ blog }) => {
     <div className='blog' style={BlogStyle}>
       <div>
         <span className='defaultInfo' style={{ marginRight: '1rem' }}>
-          <i> {title}</i> by <strong>{author}</strong>
+          <Link to={`/blogs/${id}`}>
+            <i> {title}</i> by <strong>{author}</strong>
+          </Link>
         </span>
         <button id='toggleInfo' onClick={() => setSeeMore(!seeMore)}>
           {seeMore ? 'Close' : 'More'}

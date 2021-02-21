@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react';
-import { Switch, Route, Link, Redirect, useHistory } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useHistory,
+  useRouteMatch,
+} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from './reducers/notificationReducer';
 import { logoutUser } from './reducers/userReducer';
@@ -27,6 +34,7 @@ const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(({ user }) => user);
+  const blogs = useSelector(({ blogs }) => blogs);
 
   useEffect(() => {
     dispatch(initializeUser());
@@ -47,6 +55,11 @@ const App = () => {
     );
     history.push('/login');
   };
+
+  const match = useRouteMatch('/blogs/:id');
+  const blog = match ? blogs.find((blog) => blog.id === match.params.id) : null;
+
+  console.log('blog', blog);
 
   return (
     <>
@@ -72,7 +85,7 @@ const App = () => {
           <NewBlogForm />
         </Route>
         <Route path='/blogs/:id'>
-          <Blog />
+          <Blog blog={blog} defSeeMore />
         </Route>
         <Route path='/blogs'>
           <Redirect to='/' />
@@ -86,7 +99,9 @@ const App = () => {
         <Route path='/login'>
           {user ? <Redirect to='/' /> : <LoginForm />}
         </Route>
-        <Route path='/'>{user ? <Blogs /> : <Redirect to='/login' />}</Route>
+        <Route path='/'>
+          {user ? <Blogs blogs={blogs} /> : <Redirect to='/login' />}
+        </Route>
       </Switch>
     </>
   );
