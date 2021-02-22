@@ -83,7 +83,7 @@ const App = () => {
           <NewBlogForm />
         </Route>
         <Route path='/blogs/:id'>
-          <Blog blog={blog} />
+          <Blog blog={blog} User={user} />
         </Route>
         <Route path='/blogs'>
           <Redirect to='/' />

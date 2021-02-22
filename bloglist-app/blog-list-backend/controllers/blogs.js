@@ -72,10 +72,12 @@ blogsRouter.post('/:id/comments', async (req, res) => {
   blog.comments = blog.comments.concat(savedComment._id);
   await blog.save();
 
-  console.log(blog);
-  console.log(savedComment);
-
-  return res.json(savedComment);
+  return res.json({
+    status: 200,
+    msg: 'successfully created new comment',
+    success: true,
+    data: savedComment,
+  });
 });
 
 blogsRouter.patch('/:id', async (req, res) => {

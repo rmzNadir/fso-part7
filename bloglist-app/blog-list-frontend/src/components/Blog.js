@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { likeBlog, removeBlog } from '../reducers/blogsReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import blogs from '../services/blogs';
 
 const BlogStyle = {
   display: 'flex',
@@ -21,11 +21,17 @@ const infoStyle = {
   alignItems: 'center',
 };
 
-const Blog = ({ blog, defSeeMore }) => {
+const Blog = ({ blog, User }) => {
   const dispatch = useDispatch();
-  const loggedUser = useSelector(({ user }) => user.id);
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
 
-  const { title, author, url, likes, user, id } = blog;
+  const { title, author, url, likes, user, id, comments: blogComments } = blog;
+  const { id: userId } = User;
+
+  useEffect(() => {
+    setComments(blogComments);
+  }, []);
 
   // Service implementation for handling removal of blogs
 
@@ -39,13 +45,25 @@ const Blog = ({ blog, defSeeMore }) => {
     }
   };
 
+  const sendComments = async () => {
+    try {
+      const newComment = { content: comment };
+      const res = await blogs.createComment(id, newComment);
+      const { success, data } = res;
+      if (success) {
+        setComments([...comments, data]);
+        setComment('');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className='blog' style={BlogStyle}>
       <div>
         <span className='defaultInfo' style={{ marginRight: '1rem' }}>
-          <Link to={`/blogs/${id}`}>
-            <i> {title}</i> by <strong>{author}</strong>
-          </Link>
+          <i> {title}</i> by <strong>{author}</strong>
         </span>
       </div>
 
@@ -68,12 +86,21 @@ const Blog = ({ blog, defSeeMore }) => {
         <br />
         <div className='posterDiv'>Poster: {user.username}</div>
         <br />
-        {loggedUser === user.id && (
+        {userId === user.id && (
           <button id='removeButton' onClick={() => handleRemove(blog)}>
             Remove
           </button>
         )}
       </div>
+      <input type='text' onChange={(e) => setComment(e.target.value)} />
+      <button disabled={comment ? false : true} onClick={sendComments}>
+        Add comment
+      </button>
+      <ul>
+        {comments.map((c) => (
+          <li key={c.id}>{c.content}</li>
+        ))}
+      </ul>
     </div>
   );
 };
