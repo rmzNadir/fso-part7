@@ -33,6 +33,7 @@ import { initializeUser } from './reducers/userReducer';
 const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const match = useRouteMatch('/blogs/:id');
   const user = useSelector(({ user }) => user);
   const blogs = useSelector(({ blogs }) => blogs);
 
@@ -56,8 +57,8 @@ const App = () => {
     history.push('/login');
   };
 
-  const match = useRouteMatch('/blogs/:id');
-  const blog = match ? blogs.find((blog) => blog.id === match.params.id) : null;
+  const blog =
+    match && blogs ? blogs.find((blog) => blog.id === match.params.id) : null;
 
   return (
     <>
@@ -79,14 +80,14 @@ const App = () => {
       )}
       <Notification />
       <Switch>
-        <Route path='/blogs/new'>
-          <NewBlogForm />
-        </Route>
         <Route path='/blogs/:id'>
-          <Blog blog={blog} User={user} />
+          {blog && <Blog blog={blog} User={user} />}
         </Route>
         <Route path='/blogs'>
           <Redirect to='/' />
+        </Route>
+        <Route path='/blogs/new'>
+          <NewBlogForm />
         </Route>
         <Route path='/users/:id'>
           <User />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { likeBlog, removeBlog } from '../reducers/blogsReducer';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import blogs from '../services/blogs';
 
 const BlogStyle = {
@@ -26,12 +26,12 @@ const Blog = ({ blog, User }) => {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
 
-  const { title, author, url, likes, user, id, comments: blogComments } = blog;
+  const { title, author, url, likes, user, comments: blogComments, id } = blog;
   const { id: userId } = User;
 
   useEffect(() => {
     setComments(blogComments);
-  }, []);
+  }, [blogComments]);
 
   // Service implementation for handling removal of blogs
 
