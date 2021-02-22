@@ -59,8 +59,6 @@ const App = () => {
   const match = useRouteMatch('/blogs/:id');
   const blog = match ? blogs.find((blog) => blog.id === match.params.id) : null;
 
-  console.log('blog', blog);
-
   return (
     <>
       {user && (
@@ -69,14 +67,14 @@ const App = () => {
             <Link to='/'>home</Link>
             <Link to='/blogs/new'>new blog</Link>
             <Link to='/users'>users</Link>
+            <div>
+              {user && user.name} logged in. &nbsp;
+              <button onClick={handleLogout}>Logout</button>
+              <br />
+            </div>
           </div>
 
-          <h2>blogs</h2>
-          <div>
-            {user && user.name} logged in. &nbsp;
-            <button onClick={handleLogout}>Logout</button>
-            <br />
-          </div>
+          <h2>Blog app</h2>
         </>
       )}
       <Notification />
@@ -85,7 +83,7 @@ const App = () => {
           <NewBlogForm />
         </Route>
         <Route path='/blogs/:id'>
-          <Blog blog={blog} defSeeMore />
+          <Blog blog={blog} />
         </Route>
         <Route path='/blogs'>
           <Redirect to='/' />

@@ -22,14 +22,8 @@ const infoStyle = {
 };
 
 const Blog = ({ blog, defSeeMore }) => {
-  console.log(blog);
   const dispatch = useDispatch();
   const loggedUser = useSelector(({ user }) => user.id);
-
-  // State only used by a single component that doesn't matter globally
-  // and state for non critical UI elements can be local
-
-  const [seeMore, setSeeMore] = useState(defSeeMore || false);
 
   const { title, author, url, likes, user, id } = blog;
 
@@ -53,37 +47,33 @@ const Blog = ({ blog, defSeeMore }) => {
             <i> {title}</i> by <strong>{author}</strong>
           </Link>
         </span>
-        <button id='toggleInfo' onClick={() => setSeeMore(!seeMore)}>
-          {seeMore ? 'Close' : 'More'}
-        </button>
       </div>
-      {seeMore && (
-        <div className='extraInfo'>
-          <br />
-          <div className='linkDiv'>
-            Link: <a href={url}>{url}</a>
-          </div>
-          <br />
-          <div className='likesDiv' style={infoStyle}>
-            Likes: {likes}
-            <button
-              id='likeButton'
-              style={{ marginLeft: '0.5rem' }}
-              onClick={() => dispatch(likeBlog(blog))}
-            >
-              Like
-            </button>
-          </div>
-          <br />
-          <div className='posterDiv'>Poster: {user.username}</div>
-          <br />
-          {loggedUser === user.id && (
-            <button id='removeButton' onClick={() => handleRemove(blog)}>
-              Remove
-            </button>
-          )}
+
+      <div className='extraInfo'>
+        <br />
+        <div className='linkDiv'>
+          Link: <a href={url}>{url}</a>
         </div>
-      )}
+        <br />
+        <div className='likesDiv' style={infoStyle}>
+          Likes: {likes}
+          <button
+            id='likeButton'
+            style={{ marginLeft: '0.5rem' }}
+            onClick={() => dispatch(likeBlog(blog))}
+          >
+            Like
+          </button>
+        </div>
+        <br />
+        <div className='posterDiv'>Poster: {user.username}</div>
+        <br />
+        {loggedUser === user.id && (
+          <button id='removeButton' onClick={() => handleRemove(blog)}>
+            Remove
+          </button>
+        )}
+      </div>
     </div>
   );
 };

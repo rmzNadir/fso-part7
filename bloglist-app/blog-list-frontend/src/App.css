@@ -57,6 +57,18 @@
   margin-bottom: 10px;
 }
 
+.nav-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-bar > :last-child {
+  display: flex;
+  align-items: center;
+  justify-self: flex-end;
+}
+
 .nav-bar > * {
   padding: 0 1rem 0 0;
 }

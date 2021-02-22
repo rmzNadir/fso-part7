@@ -3,16 +3,19 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const Blog = require('../models/blog');
+const Comment = require('../models/comment');
 const User = require('../models/user');
 
 blogsRouter.get('/', async (req, res) => {
-  const blogs = await Blog.find({}).populate('user', { blogsPosted: 0 });
+  const blogs = await Blog.find({})
+    .populate('user', { blogsPosted: 0 })
+    .populate('comments', { blog: 0 });
   const sortedBlogs = blogs.sort((blogA, blogB) => blogB.likes - blogA.likes);
   res.json(sortedBlogs);
 });
 
 blogsRouter.get('/:id', async (req, res) => {
-  const blog = await Blog.findById(req.params.id);
+  const blog = await Blog.findById(req.params.id).populate('comments');
   if (blog) {
     res.json(blog.toJSON());
   } else {
@@ -51,6 +54,28 @@ blogsRouter.post('/', async (req, res) => {
   });
 
   return res.json(blog);
+});
+
+blogsRouter.post('/:id/comments', async (req, res) => {
+  const { content } = req.body;
+  const { id } = req.params;
+
+  const blog = await Blog.findById(id);
+
+  const newComment = new Comment({
+    content,
+    blog: id,
+  });
+
+  const savedComment = await newComment.save();
+
+  blog.comments = blog.comments.concat(savedComment._id);
+  await blog.save();
+
+  console.log(blog);
+  console.log(savedComment);
+
+  return res.json(savedComment);
 });
 
 blogsRouter.patch('/:id', async (req, res) => {
