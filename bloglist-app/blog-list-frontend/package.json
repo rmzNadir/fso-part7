@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "browserslist": "^4.8.6",
@@ -15,7 +17,9 @@
     "react-scripts": "^3.4.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^5.2.1",
+    "typeface-roboto": "^1.1.13"
   },
   "scripts": {
     "start": "react-scripts start",

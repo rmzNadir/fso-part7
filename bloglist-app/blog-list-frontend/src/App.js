@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Switch,
   Route,
@@ -7,6 +7,17 @@ import {
   useHistory,
   useRouteMatch,
 } from 'react-router-dom';
+import {
+  Menu,
+  MenuItem,
+  AppBar,
+  IconButton,
+  Typography,
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import { StyledToolbar, AppBody } from './styles';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from './reducers/notificationReducer';
 import { logoutUser } from './reducers/userReducer';
@@ -36,6 +47,8 @@ const App = () => {
   const match = useRouteMatch('/blogs/:id');
   const user = useSelector(({ user }) => user);
   const blogs = useSelector(({ blogs }) => blogs);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
   useEffect(() => {
     dispatch(initializeUser());
@@ -44,6 +57,7 @@ const App = () => {
 
   // Service implementation for handling user logouts
   const handleLogout = () => {
+    setAnchorEl(null);
     dispatch(logoutUser());
     dispatch(
       setNotification(
@@ -60,8 +74,57 @@ const App = () => {
   const blog =
     match && blogs ? blogs.find((blog) => blog.id === match.params.id) : null;
 
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
+      <AppBar position='static'>
+        <StyledToolbar>
+          <div>
+            <IconButton edge='start' color='inherit' aria-label='menu'>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant='h6'>Blogs</Typography>
+          </div>
+          {user && (
+            <div>
+              <IconButton
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                onClick={handleMenu}
+                color='inherit'
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id='menu-appbar'
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
+            </div>
+          )}
+        </StyledToolbar>
+      </AppBar>
       {user && (
         <>
           <div className='nav-bar'>
@@ -79,29 +142,31 @@ const App = () => {
         </>
       )}
       <Notification />
-      <Switch>
-        <Route path='/blogs/:id'>
-          {blog && <Blog blog={blog} User={user} />}
-        </Route>
-        <Route path='/blogs'>
-          <Redirect to='/' />
-        </Route>
-        <Route path='/blogs/new'>
-          <NewBlogForm />
-        </Route>
-        <Route path='/users/:id'>
-          <User />
-        </Route>
-        <Route path='/users'>
-          <Users />
-        </Route>
-        <Route path='/login'>
-          {user ? <Redirect to='/' /> : <LoginForm />}
-        </Route>
-        <Route path='/'>
-          {user ? <Blogs blogs={blogs} /> : <Redirect to='/login' />}
-        </Route>
-      </Switch>
+      <AppBody>
+        <Switch>
+          <Route path='/blogs/:id'>
+            {blog && <Blog blog={blog} User={user} />}
+          </Route>
+          <Route path='/blogs'>
+            <Redirect to='/' />
+          </Route>
+          <Route path='/blogs/new'>
+            <NewBlogForm />
+          </Route>
+          <Route path='/users/:id'>
+            <User />
+          </Route>
+          <Route path='/users'>
+            <Users />
+          </Route>
+          <Route path='/login'>
+            {user ? <Redirect to='/' /> : <LoginForm />}
+          </Route>
+          <Route path='/'>
+            {user ? <Blogs blogs={blogs} /> : <Redirect to='/login' />}
+          </Route>
+        </Switch>
+      </AppBody>
     </>
   );
 };
