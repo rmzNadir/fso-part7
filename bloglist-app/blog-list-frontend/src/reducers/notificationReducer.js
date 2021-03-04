@@ -25,7 +25,7 @@ export const setNotification = (content, duration) => {
       () => {
         dispatch({ type: 'REMOVE_NOTIFICATION' });
       },
-      duration ? duration * 1000 : 5000
+      duration ? duration * 1000 : 3000
     );
   };
 };

@@ -1,24 +1,23 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-
-const extraStyle = {
-  width: 'auto',
-  position: 'absolute',
-  top: '1%',
-  left: '30%',
-  right: '30%',
-};
+import { Snackbar } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 
 const Notification = () => {
   const notification = useSelector(({ notification }) => notification);
 
   const { title, type } = notification;
-  // console.log('notification', notification);
+  // console.log(type);
   return (
     title !== '' && (
-      <div style={extraStyle} className={type}>
-        {title}
-      </div>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open
+        key='top center'
+        color='success'
+      >
+        <Alert severity={type}>{title}</Alert>
+      </Snackbar>
     )
   );
 };
