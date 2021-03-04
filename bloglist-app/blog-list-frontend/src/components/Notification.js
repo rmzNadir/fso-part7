@@ -16,7 +16,9 @@ const Notification = () => {
         key='top center'
         color='success'
       >
-        <Alert severity={type}>{title}</Alert>
+        <Alert severity={type} variant='filled'>
+          {title}
+        </Alert>
       </Snackbar>
     )
   );

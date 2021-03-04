@@ -49,3 +49,17 @@ body {
 .users-info-header > * {
   padding: 0 1rem;
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: #bebebe;
+  border-radius: 10px !important;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px !important;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #69f0ae;
+}

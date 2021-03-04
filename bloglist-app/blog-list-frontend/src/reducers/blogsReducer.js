@@ -82,7 +82,7 @@ export const likeBlog = (blog) => {
             type: 'success',
             title: `You liked ${blog.title} by ${blog.author}`,
           },
-          5
+          3
         )
       );
 

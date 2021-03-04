@@ -63,6 +63,7 @@ const App = () => {
   // Service implementation for handling user logouts
   const handleLogout = () => {
     setAnchorEl(null);
+    setTab('/');
     dispatch(logoutUser());
     dispatch(
       setNotification(
@@ -103,9 +104,11 @@ const App = () => {
       <Notification />
       <StyledAppBar position='static'>
         <Tabs value={tab} onChange={handleTabChange} variant='standard'>
-          <Tab value='/' label='Home' />
-          <Tab value='/blogs/new' label='New blog' />
-          <Tab value='/users' label='Users' />
+          <Tab value='/' label={user ? 'Home' : 'Login'} />
+          {user && [
+            <Tab key='newBlog' value='/blogs/new' label='New blog' />,
+            <Tab key='users' value='/users' label='Users' />,
+          ]}
         </Tabs>
         <StyledToolbar>
           {user && (

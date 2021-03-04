@@ -3,15 +3,12 @@ import green from '@material-ui/core/colors/green';
 
 const theme = createMuiTheme({
   palette: {
+    type: 'dark',
     primary: {
       main: '#cc2949',
     },
     secondary: {
       main: green['A200'],
-    },
-    text: {
-      primary: '#ffff',
-      secondary: '#d2d2d2',
     },
   },
 });
