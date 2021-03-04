@@ -87,7 +87,9 @@ blogsRouter.patch('/:id', async (req, res) => {
     { _id: id },
     { $set: req.body },
     { new: true }
-  ).populate('user', { blogsPosted: 0 });
+  )
+    .populate('user', { blogsPosted: 0 })
+    .populate('comments');
   return res.json({
     status: 200,
     success: true,
