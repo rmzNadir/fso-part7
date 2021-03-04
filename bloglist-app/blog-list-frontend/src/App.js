@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   Switch,
   Route,
-  Link,
   Redirect,
   useHistory,
   useRouteMatch,
@@ -10,13 +9,19 @@ import {
 import {
   Menu,
   MenuItem,
-  AppBar,
   IconButton,
+  Tabs,
+  Tab,
   Typography,
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { StyledToolbar, AppBody } from './styles';
+import {
+  StyledToolbar,
+  AppBody,
+  CurrentUserInfo,
+  StyledDivider,
+  StyledAppBar,
+} from './styles';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from './reducers/notificationReducer';
@@ -24,11 +29,11 @@ import { logoutUser } from './reducers/userReducer';
 
 // Components
 
-import Blogs from './components/Blogs';
+import Blogs from './components/Blogs/Blogs';
 import NewBlogForm from './components/NewBlogForm';
 import LoginForm from './components/LoginForm';
 import Notification from './components/Notification';
-import Blog from './components/Blog';
+import Blog from './components/Blog/Blog';
 import Users from './components/Users';
 import User from './components/User';
 
@@ -48,7 +53,7 @@ const App = () => {
   const user = useSelector(({ user }) => user);
   const blogs = useSelector(({ blogs }) => blogs);
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [tab, setTab] = useState('/');
 
   useEffect(() => {
     dispatch(initializeUser());
@@ -82,66 +87,53 @@ const App = () => {
     setAnchorEl(null);
   };
 
+  const handleTabChange = (e, tab) => {
+    setTab(tab);
+    history.push(tab);
+  };
+
+  const handleShowUserProfile = () => {
+    setAnchorEl(null);
+    history.push(`/users/${user.id}`);
+    setTab('/users');
+  };
+
   return (
     <>
-      <AppBar position='static'>
+      <Notification />
+      <StyledAppBar position='static'>
+        <Tabs value={tab} onChange={handleTabChange} variant='standard'>
+          <Tab value='/' label='Home' />
+          <Tab value='/blogs/new' label='New blog' />
+          <Tab value='/users' label='Users' />
+        </Tabs>
         <StyledToolbar>
-          <div>
-            <IconButton edge='start' color='inherit' aria-label='menu'>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant='h6'>Blogs</Typography>
-          </div>
           {user && (
-            <div>
-              <IconButton
-                aria-label='account of current user'
-                aria-controls='menu-appbar'
-                aria-haspopup='true'
-                onClick={handleMenu}
-                color='inherit'
-              >
+            <CurrentUserInfo>
+              <Typography variant='subtitle1'>{user && user.name} </Typography>
+              <StyledDivider
+                orientation='vertical'
+                variant='fullWidth'
+                flexItem
+              />
+              <IconButton onClick={handleMenu} color='inherit'>
                 <AccountCircle />
               </IconButton>
               <Menu
                 id='menu-appbar'
                 anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
                 keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
+                open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleShowUserProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
-            </div>
+            </CurrentUserInfo>
           )}
         </StyledToolbar>
-      </AppBar>
-      {user && (
-        <>
-          <div className='nav-bar'>
-            <Link to='/'>home</Link>
-            <Link to='/blogs/new'>new blog</Link>
-            <Link to='/users'>users</Link>
-            <div>
-              {user && user.name} logged in. &nbsp;
-              <button onClick={handleLogout}>Logout</button>
-              <br />
-            </div>
-          </div>
+      </StyledAppBar>
 
-          <h2>Blog app</h2>
-        </>
-      )}
-      <Notification />
       <AppBody>
         <Switch>
           <Route path='/blogs/:id'>
