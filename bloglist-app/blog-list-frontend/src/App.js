@@ -34,7 +34,7 @@ import NewBlogForm from './components/NewBlogForm';
 import LoginForm from './components/LoginForm/LoginForm';
 import Notification from './components/Notification';
 import Blog from './components/Blog/Blog';
-import Users from './components/Users';
+import Users from './components/Users/Users';
 import User from './components/User';
 
 // Styles
