@@ -13,11 +13,6 @@ export const CardWrapper = styled.div`
   .card-content {
     padding: 0 !important;
   }
-
-  .main-info-bottom {
-    display: flex;
-    justify-content: space-between;
-  }
 `;
 
 export const ActionsArea = styled.div`
@@ -40,6 +35,11 @@ export const BlogsPosted = styled.div`
   align-items: center;
   flex-direction: column;
   padding: 1rem;
+
+  .blog-list-title {
+    align-self: flex-start;
+    margin-bottom: 0.5rem;
+  }
 
   & .blogs-list {
     width: 100%;

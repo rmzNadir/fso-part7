@@ -34,12 +34,12 @@ const User = () => {
             <CardContent className='card-content'>
               <MainInfo>
                 <Typography variant='h4'>{name}</Typography>
-                <Typography className='main-info-bottom'>
-                  Added blogs
-                </Typography>
               </MainInfo>
 
               <BlogsPosted>
+                <Typography variant='h6' className='blog-list-title'>
+                  Added blogs
+                </Typography>
                 <List className='blogs-list'>
                   {blogsPosted.map(({ id, title }, i) => (
                     <React.Fragment key={id}>
