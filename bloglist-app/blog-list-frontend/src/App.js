@@ -31,7 +31,7 @@ import { logoutUser } from './reducers/userReducer';
 
 import Blogs from './components/Blogs/Blogs';
 import NewBlogForm from './components/NewBlogForm';
-import LoginForm from './components/LoginForm';
+import LoginForm from './components/LoginForm/LoginForm';
 import Notification from './components/Notification';
 import Blog from './components/Blog/Blog';
 import Users from './components/Users';
