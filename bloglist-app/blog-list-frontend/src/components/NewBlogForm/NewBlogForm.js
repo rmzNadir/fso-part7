@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBlog } from '../../reducers/blogsReducer';
+import { useHistory } from 'react-router-dom';
 import { FormSpace, FieldSpace } from './styles';
 import {
   Typography,
@@ -12,6 +13,7 @@ import {
 } from '@material-ui/core';
 
 const NewBlogForm = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   // State only used by a single component that doesn't matter globally
@@ -31,14 +33,21 @@ const NewBlogForm = () => {
     setNewBlog(newObj);
   };
 
-  const handleSubmitBlog = (e) => {
+  const handleSubmitBlog = async (e) => {
     e.preventDefault();
-    dispatch(createBlog(newBlog));
+
+    const res = await dispatch(createBlog(newBlog));
+    const {
+      data: { id },
+    } = res;
+
     setNewBlog({
       title: '',
       author: '',
       url: '',
     });
+
+    history.push(`/blogs/${id}`);
   };
 
   return (
