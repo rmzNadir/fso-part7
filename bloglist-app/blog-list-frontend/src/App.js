@@ -139,15 +139,16 @@ const App = () => {
 
       <AppBody>
         <Switch>
+          <Route path='/blogs/new'>
+            <NewBlogForm />
+          </Route>
           <Route path='/blogs/:id'>
             {blog && <Blog blog={blog} User={user} />}
           </Route>
           <Route path='/blogs'>
             <Redirect to='/' />
           </Route>
-          <Route path='/blogs/new'>
-            <NewBlogForm />
-          </Route>
+
           <Route path='/users/:id'>
             <User />
           </Route>
