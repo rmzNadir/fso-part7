@@ -32,6 +32,12 @@ export const ActionsArea = styled.div`
 
 export const MainInfo = styled.div`
   padding: 1rem;
+
+  .blog-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 export const CommentsArea = styled.div`
