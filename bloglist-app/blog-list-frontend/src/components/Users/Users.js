@@ -15,6 +15,7 @@ import {
   Typography,
   Card,
   CardContent,
+  Grow,
 } from '@material-ui/core';
 
 const Users = () => {
@@ -28,36 +29,38 @@ const Users = () => {
   return (
     users && (
       <UsersSpace>
-        <Card>
-          <CardContent>
-            <Typography className='users-header' variant='h4'>
-              Users
-            </Typography>
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Blogs created</TableCell>
-                  </TableRow>
-                </TableHead>
-
-                <TableBody>
-                  {users.map(({ name, blogsPosted, id }) => (
-                    <TableRow key={id}>
-                      <TableCell component='th' scope='row'>
-                        <Link component={RouterLink} to={`users/${id}`}>
-                          {name}
-                        </Link>
-                      </TableCell>
-                      <TableCell>{blogsPosted.length}</TableCell>
+        <Grow in>
+          <Card>
+            <CardContent>
+              <Typography className='users-header' variant='h4'>
+                Users
+              </Typography>
+              <TableContainer component={Paper}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Blogs created</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </CardContent>
-        </Card>
+                  </TableHead>
+
+                  <TableBody>
+                    {users.map(({ name, blogsPosted, id }) => (
+                      <TableRow key={id}>
+                        <TableCell component='th' scope='row'>
+                          <Link component={RouterLink} to={`users/${id}`}>
+                            {name}
+                          </Link>
+                        </TableCell>
+                        <TableCell>{blogsPosted.length}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </CardContent>
+          </Card>
+        </Grow>
       </UsersSpace>
     )
   );

@@ -30,7 +30,7 @@ import { logoutUser } from './reducers/userReducer';
 // Components
 
 import Blogs from './components/Blogs/Blogs';
-import NewBlogForm from './components/NewBlogForm';
+import NewBlogForm from './components/NewBlogForm/NewBlogForm';
 import LoginForm from './components/LoginForm/LoginForm';
 import Notification from './components/Notification';
 import Blog from './components/Blog/Blog';
