@@ -17,7 +17,7 @@ const Blogs = ({ blogs }) => {
         <Zoom
           key={id}
           in
-          style={{ transitionDelay: (i * 100).toString() + 'ms' }}
+          style={{ transitionDelay: (i * 75).toString() + 'ms' }}
         >
           <Card variant='elevation' className='blogs-card'>
             <CardContent className='card-content'>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { likeBlog, removeBlog } from '../../reducers/blogsReducer';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import blogs from '../../services/blogs';
 import {
   Card,
@@ -33,6 +34,7 @@ import { CardWrapper, ActionsArea, MainInfo, CommentsArea } from './styles';
 
 const Blog = ({ blog, User }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -56,7 +58,8 @@ const Blog = ({ blog, User }) => {
   // Service implementation for handling removal of blogs
 
   const handleConfirmDelete = async () => {
-    dispatch(removeBlog(id));
+    await dispatch(removeBlog(id));
+    history.push('/');
   };
 
   const sendComments = async () => {
